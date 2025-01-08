@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>BILLETERA</title>
+</head>
+<body>
+
+    chau
+    
+</body>
+
+</html>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io();  // Inicializar la conexión con el servidor
+    socket.emit('ping',"desde ejs");
+
+    socket.on('pong', (msg)=>{
+        console.log('Pong recibido:', msg);  // Mostrar el mensaje recibido en consola
+    } );
+</script>
