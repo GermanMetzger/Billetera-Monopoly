@@ -3,18 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
     <title>BILLETERA</title>
 </head>
 <body>
 
-    chau
+    <div class="container">
+        <div class="header" id="header">
+            <h1>BILLETERA</h1>
+            <button onclick="createRoom()">Crear</button>
+            <button onclick="joinRoom()">Unirse</button>
+        </div>
+            
+
+        
     
 </body>
 
 </html>
 
-
 <script src="/socket.io/socket.io.js"></script>
+<script src="/js/funciones.js" defer></script>
 <script>
     var socket = io();  // Inicializar la conexión con el servidor
     socket.emit('ping',"desde ejs");

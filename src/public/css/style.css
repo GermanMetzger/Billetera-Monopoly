@@ -1,0 +1,12 @@
+
+
+body {
+    background-color: grey;
+    font-family: sans-serif;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
