@@ -10,3 +10,15 @@ body {
     flex-direction: column;
     align-items: center;
 }
+
+.espera{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+.codigo{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
