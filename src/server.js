@@ -3,6 +3,9 @@ const app = express();
 
 
 
+
+
+
 //------------SOCKET.io-------------------------
 const http = require('http');  // Necesario para usar Socket.IO con Express
 const { Server } = require('socket.io');  // Importa Socket.IO
@@ -13,7 +16,11 @@ const socketGeneral = require('./sockets/general'); // Archivo para manejar los 
 io.on('connection', async (socket)=>{
     console.log(`Socket ${socket.id} conectado`);
     socketGeneral(io, socket);
-    socket.on('disconnect',()=>{console.log(`Socket ${socket.id} se desconecto`);});
+    socket.on('disconnect',()=>{
+        console.log(`Socket ${socket.id} se desconecto`);
+    });
+
+
 });
 
 
@@ -28,6 +35,12 @@ app.use(express.static('public'));
 app.get('/', (req, res) => {
     res.render('index');  // Renderiza 'index.ejs' desde la carpeta 'views'
 });
+
+
+
+
+
+
 
 const port = 3000;
 server.listen(port, () => {

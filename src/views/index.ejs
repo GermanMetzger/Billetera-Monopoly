@@ -11,21 +11,29 @@
     <div class="container">
         <div class="header" id="header">
             <h1>BILLETERA</h1>
-            <button onclick="createRoom()">Crear</button>
-            <button onclick="joinRoom()">Unirse</button>
+            <button class="boton" onclick="createRoom()">Crear</button>
+            <button class="boton" onclick="joinRoom()">Unirse</button>
         </div>
-        <div class="espera" id="espera">
-            <h1>Esperando...</h1>
+
+        <div class="centrarTodo" id="centrarTodo">
+            <div class="espera" id="espera"></div>
+            <div class="linkDiv" id="linkDiv" style="display: none;"></div>
+            <div class="codigoSala" id="clave"></div>
+            <div class="comenzar" id="comenzar">
+                <button  class="boton" id="link" onclick="copiarLink()">Copiar link</button>
+                <button  class="boton" onclick="jugar()">Comenzar Partida</button>
+            </div>
         </div>
-        <div class="codigo" id="codigo">
-            <input type="text" name="nombre" id="nombre" placeholder="Nombre">
-            <input type="text" name="codigo" id="codigoSala" placeholder="Codigo">
-            <button onclick="unirse()">Unirse</button>
-        </div>
-            
 
         
-    
+        
+        <div class="codigo" id="codigo">
+            <input type="text" name="nombre" class="boton" id="nombre" placeholder="Nombre Jugador">
+            <input type="text" name="codigo" class="boton" id="codigoSala" placeholder="Codigo sala">
+            <input type="color" name="color" class="boton" id="color">
+            <input type="submit" value="Unirse" onclick="unirse()"></input>
+        </div>
+    </div>
 </body>
 
 </html>
@@ -33,10 +41,17 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/funciones.js" defer></script>
 <script>
-    var socket = io();  // Inicializar la conexión con el servidor
-    socket.emit('ping',"desde ejs");
+  window.onload = () => {
+      // Obtener el parámetro 'codigo' de la URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const codigo = urlParams.get('codigo');  // Corregir la obtención del parámetro
+      const unirse = urlParams.get('unirse');  // Corregir la obtención del parámetro
+      if(unirse){
+        // Aquí se puede llamar a la función joinRoom porque ya estará disponible
+        joinRoom();
+      }
 
-    socket.on('pong', (msg)=>{
-        console.log('Pong recibido:', msg);  // Mostrar el mensaje recibido en consola
-    } );
+    // Colocar el código en el campo del formulario
+    document.getElementById('codigoSala').value = codigo;
+  };
 </script>

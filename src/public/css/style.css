@@ -1,24 +1,96 @@
 
 
 body {
-    background-color: red;
+    background-color: cadetblue;
     font-family: sans-serif;
-}
-
-.header {
     display: flex;
+    justify-content: center;
     flex-direction: column;
     align-items: center;
 }
 
+.header {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header button{
+    margin: 10px;
+}
+
 .espera{
-    display: none;
+    display: flex;
+    justify-content: center;
     flex-direction: column;
     align-items: center;
 }
 
 .codigo{
     display: none;
+    flex-direction: column;
+    align-items: center;
+    margin: 15px;
+}
+
+.codigo input{
+    margin: 10px;
+}
+
+.jugador {
+    border: 2px solid seagreen;
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+}
+
+.codigoSala{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+}
+
+.link{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid blue;
+    padding: 10px;
+    margin: 10px;
+    width: 700px;
+}
+
+.centrarTodo{
+    display: none;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.boton{
+    margin: 10px;
+    padding: 10px;
+    background-color: darkblue;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    outline: none;
+}
+
+.comenzar{
+    justify-content: center;
     flex-direction: column;
     align-items: center;
 }
