@@ -1,11 +1,22 @@
 const os = require('os');
+const Jugador = require('../clases/Jugador'); // Importa la clase
+let jugadores = []; // Este arreglo contendrá las instancias de Jugador
+function obtenerIpLocal() {
+    const interfaces = os.networkInterfaces();
+    for (let nombre in interfaces) {
+        for (let interfaz of interfaces[nombre]) {
+            if (interfaz.family === 'IPv4' && !interfaz.internal) {
+                return interfaz.address;
+            }
+        }
+    }
+    return null;
+}
 module.exports = (io, socket) => {
 
     var partidaCreada = false;
 
-    
-    
-    socket.on('crear', (msg)=>{
+    socket.on('crear', (creador)=>{
         if (!partidaCreada) {
             partidaCreada = true;
             const ip = "http://"+obtenerIpLocal()+":3000";
@@ -14,10 +25,11 @@ module.exports = (io, socket) => {
             
             socket.join(codigoSala);
             
-            const nombre = msg.nombre;
-            const id = msg.id;
-            const host = msg.host;
-            console.log(msg);
+            const nombre = creador.nombre;
+            const id = creador.id;
+            const host = creador.host;
+            const color = "FFFFFF"
+            console.log(creador);
             console.log("El Banquero "+nombre+" con el id "+id+" creo la sala con el codigo: "+codigoSala);
 
             io.to(codigoSala).emit('quitarHeader',link);
@@ -31,6 +43,7 @@ module.exports = (io, socket) => {
     })
 
     socket.on('unirse', (datos)=>{
+    console.log(datos)
     const nombre = datos.nombre;
     const codigoSala = datos.codigoSala;
     socket.join(codigoSala);
@@ -47,22 +60,29 @@ module.exports = (io, socket) => {
     
     })
 
-
-
-
-
-
-
-}
-
-function obtenerIpLocal() {
-    const interfaces = os.networkInterfaces();
-    for (let nombre in interfaces) {
-        for (let interfaz of interfaces[nombre]) {
-            if (interfaz.family === 'IPv4' && !interfaz.internal) {
-                return interfaz.address;
-            }
+    socket.on('expulsar', (jugador,socketId,codigoSala)=>{
+        if (socketId) {
+            io.to(codigoSala).emit('expulsado',jugador); // Notificar al jugador que ha sido expulsado (opcional)
+            io.sockets.sockets.get(socketId).disconnect(); // Desconectar al jugador del socket
+            console.log(`Jugador ${jugador} expulsado`);
         }
-    }
-    return null;
+    })
+
+    socket.on('jugar', (jugadoresJSON)=>{
+        jugadoresJSON.forEach(jugadorData => {
+            const jugador = new Jugador(
+                jugadorData.id,
+                jugadorData.nombre,
+                jugadorData.host,
+                jugadorData.color,
+            );
+            
+            // Almacenar cada objeto Jugador en la lista
+            jugadores.push(jugador);
+        });
+        
+        console.log(jugadores);  // Verificar que la lista de objetos se ha creado
+
+    })
 }
+
