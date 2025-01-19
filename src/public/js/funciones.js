@@ -216,20 +216,35 @@ socket.on("comenzarJuego",(jugadores)=>{
         const divParaBilletera = document.createElement("div");
         const billetera = document.createElement("div");
         const dinero = document.createElement("div");
-        billetera.setAttribute("id",jugador.nombre);
-        divParaBilletera.setAttribute("class","divParaBilletera");
-        dinero.setAttribute("id",jugador.nombre+"Dinero");
-        dinero.setAttribute("class","dinero");
+    
+        billetera.setAttribute("id", jugador.nombre);
+        divParaBilletera.setAttribute("class", "divParaBilletera");
+        divParaBilletera.setAttribute("id", "divParaBilletera");
+        dinero.setAttribute("id", jugador.nombre + "Dinero");
+        dinero.setAttribute("class", "dinero");
+    
         billetera.style.borderColor = jugador.color;
         billetera.style.backgroundColor = `rgba(${hexToRgb(jugador.color)}, 0.5)`;
         billetera.classList.add("jugador");
         billetera.innerText = jugador.nombre;
-        dinero.innerText = "$"+jugador.dinero;
+        dinero.innerText = "$" + jugador.dinero;
+    
+        // Agregamos el div a la sección de billeteras
         billeteras.appendChild(divParaBilletera);
         divParaBilletera.appendChild(billetera);
         billetera.appendChild(dinero);
+    
+        divParaBilletera.style.animationDirection = "alternate-reverse"; // Anima el borde del contenedor
+    
+        // Agrega el evento onclick para detener la animación
+        divParaBilletera.onclick = function () {
+            divParaBilletera.style.animation = ""; // Detiene la animación
+            divParaBilletera.style.border = ""; // quitar borde
+            console.log(`${jugador.nombre} ha sido seleccionado.`); // Muestra mensaje en consola
+        };
+    });
+    
 
-    })
     
     let host = sessionStorage.getItem('host') === 'true';
     if(host){
@@ -246,8 +261,14 @@ socket.on("comenzarJuego",(jugadores)=>{
 
 function regalar(){
     const regalar = document.getElementById("regalar");
+    const divParaBilletera = document.getElementById("divParaBilletera");
     const jugador = sessionStorage.getItem('yo');
+    regalar.style.backgroundColor = "red";
 
+    // Aplica la animación al borde
+            // Aplica la animación al borde del divParaBilletera
+    divParaBilletera.style.animation = "animarBorde 1s infinite"; // Anima el borde del contenedor
+    divParaBilletera.style.border = "3px dashed black";
 
 }
 function pagar(){

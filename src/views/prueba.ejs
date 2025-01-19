@@ -2,21 +2,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <title>PRUEBA</title>
+    <title>BILLETERA</title>
 </head>
 <body>
 
     <div class="container" id="container" style="display: none;">
         <div class="header" id="header" style="display: none;">
-            <h1>PRUEBA</h1>
+            <h1>BILLETERA</h1>
             <button class="boton" onclick="createRoom()">Crear</button>
             <button class="boton" onclick="joinRoom()">Unirse</button>
         </div>
 
         <div class="centrarTodo" id="centrarTodo" style="display: flex;">
-            <div class="espera" id="espera" style="display: flex;"><div id="Ger" class="jugador" style="cursor: pointer;">Ger(Expulsar)</div><div id="Sofia" style="border-color: rgb(255, 0, 128); color: rgb(255, 0, 128); cursor: pointer;" class="jugador">Sofia(Expulsar)</div><div id="Walter" style="border-color: rgb(255, 128, 192); color: rgb(255, 128, 192); cursor: pointer;" class="jugador">Walter(Expulsar)</div><div id="Roma" style="border-color: rgb(255, 128, 255); color: rgb(255, 128, 255); cursor: pointer;" class="jugador">Roma(Expulsar)</div></div>
-            <div class="linkDiv" id="linkDiv" style="display: none;">http://192.168.0.72:3000?codigo=hfdcjichr&amp;unirse=true</div>
-            <div class="codigoSala" id="clave" style="display: flex;">hfdcjichr</div>
+            <div class="espera" id="espera" style="display: flex;"><div id="German" class="jugador" style="cursor: pointer;">German(Expulsar)</div><div id="sofia" style="border-color: rgb(255, 0, 128); color: rgb(255, 0, 128); cursor: pointer;" class="jugador">sofia(Expulsar)</div><div id="Roma" style="border-color: rgb(0, 255, 128); color: rgb(0, 255, 128); cursor: pointer;" class="jugador">Roma(Expulsar)</div></div>
+            <div class="linkDiv" id="linkDiv" style="display: none;">http://192.168.0.72:3000?codigo=kphg6o14p&amp;unirse=true</div>
+            <div class="codigoSala" id="clave" style="display: flex;">kphg6o14p</div>
             <div class="comenzar" id="comenzar" style="display: flex;">
                 <button class="boton" id="link" onclick="copiarLink()">Copiar link</button>
                 <button class="boton" onclick="jugar()">Comenzar Partida</button>
@@ -31,29 +31,26 @@
     </div>
     
         <div id="billeteras" class="billeteras" style="display: flex;">
-            <div class="divParaBilletera"><div id="Ger" class="jugador" style="border-color: rgb(255, 255, 255); background-color: rgba(255, 255, 255, 0.5);">Ger<div id="GerDinero" class="dinero">$1500</div></div></div>
-            <div class="divParaBilletera"><div id="Sofia" class="jugador" style="border-color: rgb(255, 0, 128); background-color: rgba(255, 0, 128, 0.5);">Sofia<div id="SofiaDinero" class="dinero">$1500</div></div></div>
-            <div class="divParaBilletera"><div id="Walter" class="jugador" style="border-color: rgb(255, 128, 192); background-color: rgba(255, 128, 192, 0.5);">Walter<div id="WalterDinero" class="dinero">$1500</div></div></div>
-            <div class="divParaBilletera"><div id="Roma" class="jugador" style="border-color: rgb(255, 128, 255); background-color: rgba(255, 128, 255, 0.5);">Roma<div id="RomaDinero" class="dinero">$1500</div></div></div>
-            <div class="divParaBilletera"><div id="Ger" class="jugador" style="border-color: rgb(255, 255, 255); background-color: rgba(255, 255, 255, 0.5);">Ger<div id="GerDinero" class="dinero">$1500</div></div></div>
-            <div class="divParaBilletera"><div id="Sofia" class="jugador" style="border-color: rgb(255, 0, 128); background-color: rgba(255, 0, 128, 0.5);">Sofia<div id="SofiaDinero" class="dinero">$1500</div></div></div>
-            <div class="divParaBilletera"><div id="Walter" class="jugador" style="border-color: rgb(255, 128, 192); background-color: rgba(255, 128, 192, 0.5);">Walter<div id="WalterDinero" class="dinero">$1500</div></div></div>
-            <div class="divParaBilletera"><div id="Roma" class="jugador" style="border-color: rgb(255, 128, 255); background-color: rgba(255, 128, 255, 0.5);">Roma<div id="RomaDinero" class="dinero">$1500</div></div></div>
-            <div class="divParaBilletera"><div id="Ger" class="jugador" style="border-color: rgb(255, 255, 255); background-color: rgba(255, 255, 255, 0.5);">Ger<div id="GerDinero" class="dinero">$1500</div></div></div>
-            <div class="divParaBilletera"><div id="Sofia" class="jugador" style="border-color: rgb(255, 0, 128); background-color: rgba(255, 0, 128, 0.5);">Sofia<div id="SofiaDinero" class="dinero">$1500</div></div></div>
-            <div class="divParaBilletera"><div id="Walter" class="jugador" style="border-color: rgb(255, 128, 192); background-color: rgba(255, 128, 192, 0.5);">Walter<div id="WalterDinero" class="dinero">$1500</div></div></div>
-            <div class="divParaBilletera"><div id="Roma" class="jugador" style="border-color: rgb(255, 128, 255); background-color: rgba(255, 128, 255, 0.5);">Roma<div id="RomaDinero" class="dinero">$1500</div></div></div>
-            <div class="divParaBilletera"><div id="Ger" class="jugador" style="border-color: rgb(255, 255, 255); background-color: rgba(255, 255, 255, 0.5);">Ger<div id="GerDinero" class="dinero">$1500</div></div></div>
-            <div class="divParaBilletera"><div id="Sofia" class="jugador" style="border-color: rgb(255, 0, 128); background-color: rgba(255, 0, 128, 0.5);">Sofia<div id="SofiaDinero" class="dinero">$1500</div></div></div>
-            <div class="divParaBilletera"><div id="Walter" class="jugador" style="border-color: rgb(255, 128, 192); background-color: rgba(255, 128, 192, 0.5);">Walter<div id="WalterDinero" class="dinero">$1500</div></div></div>
-            <div class="divParaBilletera"><div id="Roma" class="jugador" style="border-color: rgb(255, 128, 255); background-color: rgba(255, 128, 255, 0.5);">Roma<div id="RomaDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="German" style="border-color: rgb(255, 255, 255); background-color: rgba(255, 255, 255, 0.5);" class="jugador">German<div id="GermanDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="sofia" style="border-color: rgb(255, 0, 128); background-color: rgba(255, 0, 128, 0.5);" class="jugador">sofia<div id="sofiaDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="Roma" style="border-color: rgb(0, 255, 128); background-color: rgba(0, 255, 128, 0.5);" class="jugador">Roma<div id="RomaDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="German" style="border-color: rgb(255, 255, 255); background-color: rgba(255, 255, 255, 0.5);" class="jugador">German<div id="GermanDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="sofia" style="border-color: rgb(255, 0, 128); background-color: rgba(255, 0, 128, 0.5);" class="jugador">sofia<div id="sofiaDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="Roma" style="border-color: rgb(0, 255, 128); background-color: rgba(0, 255, 128, 0.5);" class="jugador">Roma<div id="RomaDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="German" style="border-color: rgb(255, 255, 255); background-color: rgba(255, 255, 255, 0.5);" class="jugador">German<div id="GermanDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="sofia" style="border-color: rgb(255, 0, 128); background-color: rgba(255, 0, 128, 0.5);" class="jugador">sofia<div id="sofiaDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="Roma" style="border-color: rgb(0, 255, 128); background-color: rgba(0, 255, 128, 0.5);" class="jugador">Roma<div id="RomaDinero" class="dinero">$1500</div></div></div>
+        </div>
+        
+        <div class="acciones" id="acciones" style="display: flex;">
+            <div id="regalar" class="accion" onclick="regalar()">Regalar</div>
+            <div id="pagarAlBanco" class="accion" onclick="pagar()">Pagar al Banco</div>
+            <div id="subastar" class="accion" onclick="subastar()">Subastar</div>
+            <div id="banco1" class="banco" onclick="pagarJugador()" style="display: flex;">Pagar (BANCO)</div>
+            <div id="banco2" class="banco" onclick="cobrarJugador()" style="display: flex;">Cobrar (BANCO)</div>
 
         </div>
-        <div class="acciones" id="acciones">
-            <div id="regalar">Regalar</div>
-            <div id="regalar">Pagar al Banco</div>
-            <div id="regalar">Subastar</div>
-        </div>
+
     
     
 
@@ -78,5 +75,6 @@
     // Colocar el código en el campo del formulario
     document.getElementById('codigoSala').value = codigo;
   };
+
 </script>
 </body></html>
