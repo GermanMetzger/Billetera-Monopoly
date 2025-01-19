@@ -13,6 +13,7 @@ function createRoom(){
     jugadores.push(json); // Insert
     sessionStorage.setItem('jugadores', JSON.stringify(jugadores)); // Save
     sessionStorage.setItem('host', true);
+    sessionStorage.setItem('yo', JSON.stringify(json)); // Save
     socket.emit('crear',json)
 };
 
@@ -44,6 +45,7 @@ function unirse(){
     jugadores.push(json); // Insert
     sessionStorage.setItem('jugadores', JSON.stringify(jugadores)); // Save
     sessionStorage.setItem('host', false);
+    sessionStorage.setItem('yo', JSON.stringify(json)); // Save
     socket.emit('unirse',json);
 }
 
@@ -204,15 +206,17 @@ function hexToRgb(hex) {
 socket.on("comenzarJuego",(jugadores)=>{
     const container = document.getElementById("container");
     const billeteras = document.getElementById("billeteras");
+    const acciones = document.getElementById("acciones");
     container.style.display = "none";
+    acciones.style.display = "flex";
     billeteras.style.display = "flex";
+
 
     jugadores.forEach(jugador => {
         const divParaBilletera = document.createElement("div");
         const billetera = document.createElement("div");
         const dinero = document.createElement("div");
         billetera.setAttribute("id",jugador.nombre);
-        billetera.setAttribute("class","billetera");
         divParaBilletera.setAttribute("class","divParaBilletera");
         dinero.setAttribute("id",jugador.nombre+"Dinero");
         dinero.setAttribute("class","dinero");
@@ -226,6 +230,35 @@ socket.on("comenzarJuego",(jugadores)=>{
         billetera.appendChild(dinero);
 
     })
-
+    
+    let host = sessionStorage.getItem('host') === 'true';
+    if(host){
+        const banco1 = document.getElementById("banco1");
+        const banco2 = document.getElementById("banco2");
+        banco1.style.display = "flex";
+        banco2.style.display = "flex";
+    }
 
 })
+
+
+//funciones dentro del juego!!!!!!!!!
+
+function regalar(){
+    const regalar = document.getElementById("regalar");
+    const jugador = sessionStorage.getItem('yo');
+
+
+}
+function pagar(){
+
+}
+function subastar(){
+
+}
+function pagarJugador(){
+
+}
+function cobrarJugador(){
+
+}

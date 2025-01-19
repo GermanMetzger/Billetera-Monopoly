@@ -1,0 +1,82 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>PRUEBA</title>
+</head>
+<body>
+
+    <div class="container" id="container" style="display: none;">
+        <div class="header" id="header" style="display: none;">
+            <h1>PRUEBA</h1>
+            <button class="boton" onclick="createRoom()">Crear</button>
+            <button class="boton" onclick="joinRoom()">Unirse</button>
+        </div>
+
+        <div class="centrarTodo" id="centrarTodo" style="display: flex;">
+            <div class="espera" id="espera" style="display: flex;"><div id="Ger" class="jugador" style="cursor: pointer;">Ger(Expulsar)</div><div id="Sofia" style="border-color: rgb(255, 0, 128); color: rgb(255, 0, 128); cursor: pointer;" class="jugador">Sofia(Expulsar)</div><div id="Walter" style="border-color: rgb(255, 128, 192); color: rgb(255, 128, 192); cursor: pointer;" class="jugador">Walter(Expulsar)</div><div id="Roma" style="border-color: rgb(255, 128, 255); color: rgb(255, 128, 255); cursor: pointer;" class="jugador">Roma(Expulsar)</div></div>
+            <div class="linkDiv" id="linkDiv" style="display: none;">http://192.168.0.72:3000?codigo=hfdcjichr&amp;unirse=true</div>
+            <div class="codigoSala" id="clave" style="display: flex;">hfdcjichr</div>
+            <div class="comenzar" id="comenzar" style="display: flex;">
+                <button class="boton" id="link" onclick="copiarLink()">Copiar link</button>
+                <button class="boton" onclick="jugar()">Comenzar Partida</button>
+            </div>
+        </div>
+        <div class="codigo" id="codigo">
+            <input type="text" name="nombre" class="boton" id="nombre" placeholder="Nombre Jugador" maxlength="10">
+            <input type="text" name="codigo" class="boton" id="codigoSala" placeholder="Codigo sala">
+            <input type="color" name="color" class="boton" id="color">
+            <input type="submit" value="Unirse" onclick="unirse()">
+        </div>
+    </div>
+    
+        <div id="billeteras" class="billeteras" style="display: flex;">
+            <div class="divParaBilletera"><div id="Ger" class="jugador" style="border-color: rgb(255, 255, 255); background-color: rgba(255, 255, 255, 0.5);">Ger<div id="GerDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="Sofia" class="jugador" style="border-color: rgb(255, 0, 128); background-color: rgba(255, 0, 128, 0.5);">Sofia<div id="SofiaDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="Walter" class="jugador" style="border-color: rgb(255, 128, 192); background-color: rgba(255, 128, 192, 0.5);">Walter<div id="WalterDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="Roma" class="jugador" style="border-color: rgb(255, 128, 255); background-color: rgba(255, 128, 255, 0.5);">Roma<div id="RomaDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="Ger" class="jugador" style="border-color: rgb(255, 255, 255); background-color: rgba(255, 255, 255, 0.5);">Ger<div id="GerDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="Sofia" class="jugador" style="border-color: rgb(255, 0, 128); background-color: rgba(255, 0, 128, 0.5);">Sofia<div id="SofiaDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="Walter" class="jugador" style="border-color: rgb(255, 128, 192); background-color: rgba(255, 128, 192, 0.5);">Walter<div id="WalterDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="Roma" class="jugador" style="border-color: rgb(255, 128, 255); background-color: rgba(255, 128, 255, 0.5);">Roma<div id="RomaDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="Ger" class="jugador" style="border-color: rgb(255, 255, 255); background-color: rgba(255, 255, 255, 0.5);">Ger<div id="GerDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="Sofia" class="jugador" style="border-color: rgb(255, 0, 128); background-color: rgba(255, 0, 128, 0.5);">Sofia<div id="SofiaDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="Walter" class="jugador" style="border-color: rgb(255, 128, 192); background-color: rgba(255, 128, 192, 0.5);">Walter<div id="WalterDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="Roma" class="jugador" style="border-color: rgb(255, 128, 255); background-color: rgba(255, 128, 255, 0.5);">Roma<div id="RomaDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="Ger" class="jugador" style="border-color: rgb(255, 255, 255); background-color: rgba(255, 255, 255, 0.5);">Ger<div id="GerDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="Sofia" class="jugador" style="border-color: rgb(255, 0, 128); background-color: rgba(255, 0, 128, 0.5);">Sofia<div id="SofiaDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="Walter" class="jugador" style="border-color: rgb(255, 128, 192); background-color: rgba(255, 128, 192, 0.5);">Walter<div id="WalterDinero" class="dinero">$1500</div></div></div>
+            <div class="divParaBilletera"><div id="Roma" class="jugador" style="border-color: rgb(255, 128, 255); background-color: rgba(255, 128, 255, 0.5);">Roma<div id="RomaDinero" class="dinero">$1500</div></div></div>
+
+        </div>
+        <div class="acciones" id="acciones">
+            <div id="regalar">Regalar</div>
+            <div id="regalar">Pagar al Banco</div>
+            <div id="regalar">Subastar</div>
+        </div>
+    
+    
+
+
+
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/funciones.js" defer=""></script>
+<script>
+  window.onload = () => {
+      // Obtener el parámetro 'codigo' de la URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const codigo = urlParams.get('codigo');  // Corregir la obtención del parámetro
+      const unirse = urlParams.get('unirse');  // Corregir la obtención del parámetro
+      if(unirse){
+        // Aquí se puede llamar a la función joinRoom porque ya estará disponible
+        joinRoom();
+      }
+
+    // Colocar el código en el campo del formulario
+    document.getElementById('codigoSala').value = codigo;
+  };
+</script>
+</body></html>

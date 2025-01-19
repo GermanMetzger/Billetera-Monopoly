@@ -33,6 +33,15 @@
     </div>
     
         <div  id="billeteras" class="billeteras"></div>
+        <div class="acciones" id="acciones">
+            <div id="regalar" class="accion" onclick="regalar()">Regalar</div>
+            <div id="pagarAlBanco" class="accion" onclick="pagar()">Pagar al Banco</div>
+            <div id="subastar" class="accion" onclick="subastar()">Subastar</div>
+            <div id="banco1" class="banco" onclick="pagarJugador()">Pagar (BANCO)</div>
+            <div id="banco2" class="banco" onclick="cobrarJugador()">Cobrar (BANCO)</div>
+
+        </div>
+
     
     
 
@@ -57,4 +66,5 @@
     // Colocar el código en el campo del formulario
     document.getElementById('codigoSala').value = codigo;
   };
+
 </script>

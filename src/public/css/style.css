@@ -139,3 +139,65 @@ body {
     height: 40%;
     width: 80%;
 }
+
+  /* Estilo para pantallas pequeñas (móviles) */
+  @media (max-width: 600px) or (orientation: landscape) {
+    body{
+        background-color: grey;
+    }
+
+    .billeteras{
+        display: flex;
+        overflow-x: auto; /* Permite el desplazamiento horizontal */
+        flex-wrap: nowrap; /* Asegura que no se envuelvan a una nueva línea */
+        white-space: nowrap; /* Evita que los jugadores salten de línea */
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .divParaBilletera{
+        display: inline-flex; /* Mantiene la estructura en línea */
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        height: 30%;
+        width: 150px; /* Ancho fijo para los jugadores */
+        margin: 15px;
+    }
+  }
+
+  .acciones{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    width: 50%;
+  }
+
+  .accion{
+    margin: 10px;
+    padding: 10px;
+    background-color: rgb(207, 207, 207);
+    color: black;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    outline: none;
+  }
+
+  .banco{
+    display: none;
+    margin: 10px;
+    padding: 10px;
+    background-color: yellow;
+    color: black;
+    border: 1 px solid orange;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    outline: none;
+  }
