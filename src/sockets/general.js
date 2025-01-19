@@ -29,7 +29,7 @@ module.exports = (io, socket) => {
             
             const nombre = creador.nombre;
             const id = creador.id;
-            const color = "FFFFFF"
+            const color = "#FFFFFF"
             console.log("El Banquero "+nombre+" con el id "+id+" creo la sala con el codigo: "+codigoSala);
 
             salas[codigoSala] = [];

@@ -4,7 +4,7 @@ class Jugador {
       this.nombre = nombre;
       this.host = host
       this.color = color
-      this.dinero = 0;
+      this.dinero = 1500;
       this.propiedades = 0;
     }
   

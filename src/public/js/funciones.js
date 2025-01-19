@@ -192,6 +192,14 @@ function jugar(){
     socket.emit("jugar",jugadores);
 }
 
+//funcion para obtener los valores de colores rgb de hexadecimal
+function hexToRgb(hex) {
+    var bigint = parseInt(hex.slice(1), 16);
+    var r = (bigint >> 16) & 255;
+    var g = (bigint >> 8) & 255;
+    var b = bigint & 255;
+    return `${r}, ${g}, ${b}`;
+}
 //Aca se ocultan todas las ventanas y se generan las billeteras
 socket.on("comenzarJuego",(jugadores)=>{
     const container = document.getElementById("container");
@@ -200,14 +208,22 @@ socket.on("comenzarJuego",(jugadores)=>{
     billeteras.style.display = "flex";
 
     jugadores.forEach(jugador => {
+        const divParaBilletera = document.createElement("div");
         const billetera = document.createElement("div");
+        const dinero = document.createElement("div");
         billetera.setAttribute("id",jugador.nombre);
-        billetera.setAttribute("class","tarjetaBilletera");
+        billetera.setAttribute("class","billetera");
+        divParaBilletera.setAttribute("class","divParaBilletera");
+        dinero.setAttribute("id",jugador.nombre+"Dinero");
+        dinero.setAttribute("class","dinero");
         billetera.style.borderColor = jugador.color;
-        billetera.style.color = jugador.color;
+        billetera.style.backgroundColor = `rgba(${hexToRgb(jugador.color)}, 0.5)`;
         billetera.classList.add("jugador");
         billetera.innerText = jugador.nombre;
-        billeteras.appendChild(billetera);
+        dinero.innerText = "$"+jugador.dinero;
+        billeteras.appendChild(divParaBilletera);
+        divParaBilletera.appendChild(billetera);
+        billetera.appendChild(dinero);
 
     })
 
