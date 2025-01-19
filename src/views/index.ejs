@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <div class="container">
+    <div class="container" id="container">
         <div class="header" id="header">
             <h1>BILLETERA</h1>
             <button class="boton" onclick="createRoom()">Crear</button>
@@ -24,15 +24,15 @@
                 <button  class="boton" onclick="jugar()">Comenzar Partida</button>
             </div>
         </div>
-
-        
-        
         <div class="codigo" id="codigo">
             <input type="text" name="nombre" class="boton" id="nombre" placeholder="Nombre Jugador" maxlength="10">
             <input type="text" name="codigo" class="boton" id="codigoSala" placeholder="Codigo sala">
             <input type="color" name="color" class="boton" id="color">
             <input type="submit" value="Unirse" onclick="unirse()"></input>
         </div>
+    </div>
+    <div  id="billeteras" class="billeteras">
+
     </div>
 </body>
 

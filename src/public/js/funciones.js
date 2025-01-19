@@ -81,7 +81,7 @@ socket.on('actualizarJugadores', (jugadores)=>{
             jugadorDiv.style.borderColor = jugador.color;
             jugadorDiv.style.color = jugador.color;
             jugadorDiv.classList.add("jugador");
-            jugadorDiv.innerText = jugador.nombre+" "+" "+" "+"(Expulsar)";
+            jugadorDiv.innerText = jugador.nombre+"(Expulsar)";
             jugadorDiv.style.cursor = "pointer";
 
             jugadorDiv.onclick = function() {
@@ -95,7 +95,6 @@ socket.on('actualizarJugadores', (jugadores)=>{
 
 socket.on('expulsado', (jugador)=>{
     console.log("Expulsando al jugador:", jugador);
-    alert("expulsado");
 
     const jugadorDiv = document.getElementById(jugador);
     if (jugadorDiv) {
@@ -187,8 +186,30 @@ socket.on("comenzar",()=>{
     comenzar.style.display = "flex";
 })
 
-//
+//funcion que combierte los JSON en objetos dentro del servidor
 function jugar(){
     let jugadores = JSON.parse(sessionStorage.getItem('jugadores'));
     socket.emit("jugar",jugadores);
 }
+
+//Aca se ocultan todas las ventanas y se generan las billeteras
+socket.on("comenzarJuego",(jugadores)=>{
+    const container = document.getElementById("container");
+    const billeteras = document.getElementById("billeteras");
+    container.style.display = "none";
+    billeteras.style.display = "flex";
+
+    jugadores.forEach(jugador => {
+        const billetera = document.createElement("div");
+        billetera.setAttribute("id",jugador.nombre);
+        billetera.setAttribute("class","tarjetaBilletera");
+        billetera.style.borderColor = jugador.color;
+        billetera.style.color = jugador.color;
+        billetera.classList.add("jugador");
+        billetera.innerText = jugador.nombre;
+        billeteras.appendChild(billetera);
+
+    })
+
+
+})
