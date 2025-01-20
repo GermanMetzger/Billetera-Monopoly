@@ -142,7 +142,7 @@ body {
   /* Estilo para pantallas pequeñas (móviles) */
   @media (max-width: 600px) or (orientation: landscape) {
     body{
-        background-color: grey;
+        background-color: lightgoldenrodyellow;
     }
 
     .billeteras{
