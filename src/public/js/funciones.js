@@ -259,18 +259,17 @@ socket.on("comenzarJuego",(jugadores)=>{
 
 //funciones dentro del juego!!!!!!!!!
 
-function regalar(){
-    const regalar = document.getElementById("regalar");
+
+const regalar = document.getElementById("regalar");
+
+regalar.addEventListener('click', () => {
     const divParaBilletera = document.getElementById("divParaBilletera");
     const jugador = sessionStorage.getItem('yo');
-    regalar.style.backgroundColor = "red";
+    // Alternar la clase 'animacion' en el elemento
+    divParaBilletera.classList.toggle('animarBorde');
+    regalar.style.backgroundColor = "red"
+});
 
-    // Aplica la animación al borde
-            // Aplica la animación al borde del divParaBilletera
-    divParaBilletera.style.animation = "animarBorde 1s infinite"; // Anima el borde del contenedor
-    divParaBilletera.style.border = "3px dashed black";
-
-}
 function pagar(){
 
 }
