@@ -1,6 +1,8 @@
 const os = require('os');
 const Jugador = require('../clases/Jugador'); // Importa la clase
-let salas = {}; // Objeto para almacenar jugadores por cada sala
+const { guardarJugador , vaciarTablas, verTodoDeTablas} = require('../db.js');
+
+
 function obtenerIpLocal() {
     const interfaces = os.networkInterfaces();
     for (let nombre in interfaces) {
@@ -13,6 +15,7 @@ function obtenerIpLocal() {
     return null;
 }
 
+let salas = {}; // Objeto para almacenar jugadores por cada sala
 module.exports = (io, socket) => {
 
     var partidaCreada = false;
@@ -29,14 +32,11 @@ module.exports = (io, socket) => {
             
             const nombre = creador.nombre;
             const id = creador.id;
-            const color = "#FFFFFF"
             console.log("El Banquero "+nombre+" con el id "+id+" creo la sala con el codigo: "+codigoSala);
 
             salas[codigoSala] = [];
 
-                // Agregar el jugador al arreglo de la sala
-            const jugador = new Jugador(socket.id, nombre, true, color);
-            salas[codigoSala].push(jugador);
+            salas[codigoSala].push(creador);
 
             io.to(codigoSala).emit('quitarHeader',link);
             io.to(codigoSala).emit('cargarLink',link);
@@ -86,37 +86,65 @@ module.exports = (io, socket) => {
 
     socket.on('jugar', (jugadoresJSON) => {
         const codigoSala = jugadoresJSON[1].codigoSala;
+        const dineroInicial = 1500;
+        let salaJugadoresTmp = [];
         
-        // Usar el arreglo de jugadores de esa sala
-        const salaJugadores = salas[codigoSala] || []; // Si no existe, asignamos un arreglo vacío
-        console.log(salaJugadores);  // Verificar que la lista de objetos se ha creado correctamente
-        
-        salaJugadores.forEach(jugadorData => {
-            // Verificar si el jugador ya está en la sala
-            const jugadorExistente = salaJugadores.find(jugador => jugador.id === jugadorData.id);
-            
-            if (!jugadorExistente) {
-                const jugador = new Jugador(
-                    jugadorData.id,
-                    jugadorData.nombre,
-                    jugadorData.host,
-                    jugadorData.color
-                );
+        jugadoresJSON.forEach(jugadorData => {
+                const jugador = new Jugador();
+                //guardarObjeto
+                jugador.cargar(jugadorData.id,jugadorData.nombre,jugadorData.host,jugadorData.color,dineroInicial)
+    
+                //guardar en la base de datos
+                guardarJugador(jugadorData.id, jugadorData.nombre, jugadorData.host, jugadorData.color, dineroInicial);
                 
-                // Si no existe, agregarlo a la sala
-                salaJugadores.push(jugador);
-            }
+                // Añadir el jugador a la lista de jugadores de la sala
+                salaJugadoresTmp.push(jugador);
+            
         });
+        salas[codigoSala] = salaJugadoresTmp;
+        console.log(salas[codigoSala]);
+    
+    
+        // Emitir la lista de jugadores actualizada para comenzar el juego
+        io.to(codigoSala).emit('comenzarJuego', salas[codigoSala]);
+    });
     
 
-        io.to(codigoSala).emit('comenzarJuego', salaJugadores);
-    });
-
-    socket.on("regalar",(json) => {
+    socket.on("regalar", async (json) => {
         const regalador = json.regalador;
         const regalado = json.regalado;
-        const dinero = json.dinero;
-        console.log(regalador+" le va a regalar $"+dinero+" a "+regalado);
+        const dinero = Number(json.dinero);
+        try {
+            // Obtengo a los jugadores usando promesas
+            const emisor = new Jugador();
+            const receptor = new Jugador();
+    
+            const jugadorEmisor = await emisor.cargarPorNombre(regalador);
+            const jugadorReceptor = await receptor.cargarPorNombre(regalado);
+    
+            if (!jugadorEmisor || !jugadorReceptor) {
+                console.log('Uno o ambos jugadores no fueron encontrados');
+                return;
+            }
+    
+            // Restamos y sumamos dinero
+            emisor.restarDinero(dinero);
+            receptor.sumarDinero(dinero);
+    
+            // Ahora creamos el objeto datos con los valores actualizados
+            const datos = {
+                emisor: regalador,
+                receptor: regalado,
+                emisorDinero: emisor.dinero,  // Valor actualizado
+                receptorDinero: receptor.dinero  // Valor actualizado
+            };
+    
+            // Enviar los datos actualizados
+            io.to(json.codigoSala).emit('actualizarDinero',datos );    
+        } catch (error) {
+            console.error('Error al procesar la operación:', error);
+        }
+
     })
     
 
@@ -129,8 +157,15 @@ module.exports = (io, socket) => {
             if (salas[codigoSala].length === 0) {
                 delete salas[codigoSala];
                 console.log(`La sala ${codigoSala} está vacía y ha sido eliminada.`);
+                vaciarTablas();
             }
         }
+    });
+
+    socket.on('verTablas', () => {
+        console.log('Ver tablas');
+        vaciarTablas();
+        verTodoDeTablas();
     });
 }
 

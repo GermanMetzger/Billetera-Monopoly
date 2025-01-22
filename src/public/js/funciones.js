@@ -8,6 +8,7 @@ function createRoom() {
         id: socket.id,
         nombre: nombre,
         host: true,
+        color: "#000000"
     }
 
     jugadores.push(json); // Insert
@@ -176,11 +177,6 @@ socket.on('error', (msg) => {
     console.log("Error:" + msg);
 });
 
-//socket que toma a todos los jugadores y comienza el juego
-function jugar() {
-    let jugadores = JSON.parse(sessionStorage.getItem('jugadores')); //todos los jugadores
-
-}
 
 //boton de comenzar que se muestra solo al host
 socket.on("comenzar", () => {
@@ -218,6 +214,7 @@ socket.on("comenzarJuego", (jugadores) => {
         const dinero = document.createElement("div");
         const regalar = document.createElement("div");
         const yo = JSON.parse(sessionStorage.getItem('yo'));
+        const codigoSala = document.getElementById("clave").innerText;
 
 
         billetera.setAttribute("id", jugador.nombre);
@@ -242,7 +239,8 @@ socket.on("comenzarJuego", (jugadores) => {
                 let json = {
                     regalador: yo.nombre,
                     regalado: jugador.nombre,
-                    dinero: numero
+                    dinero: numero,
+                    codigoSala: codigoSala
                 }
                 socket.emit('regalar', json);
                 console.log("Número ingresado:", numero);
@@ -271,6 +269,7 @@ socket.on("comenzarJuego", (jugadores) => {
 
 
 
+
     let host = sessionStorage.getItem('host') === 'true';
     if (host) {
         const banco1 = document.getElementById("banco1");
@@ -284,66 +283,17 @@ socket.on("comenzarJuego", (jugadores) => {
 
 //funciones dentro del juego!!!!!!!!!
 
+socket.on("actualizarDinero",(json) => {
+    console.log(json);
+    const emisorDiv = document.getElementById(json.emisor+"Dinero");
+    emisorDiv.innerHTML = json.emisorDinero;
 
-function regalar(regalado) {
-    const jugador = JSON.parse(sessionStorage.getItem('yo'));
-    console.log(jugador.nombre +" quiere regalarle a "+regalado);
+    const receptorDiv = document.getElementById(json.receptor+"Dinero");
+    receptorDiv.innerHTML = json.receptorDinero;
     
 
-    /*
-    // Función que maneja el click en los divs
-    function handleDivClick(event) {
-        if (!estaSeleccionando) return;  // Si no está seleccionando, no hacer nada
-        
-        const jugadorSeleccionado = event.currentTarget.querySelector('.jugador').id;
-        console.log(`El jugador seleccionado es: ${jugadorSeleccionado}`);
-        
-        // Lógica para cuando se selecciona un div
-        divsParaBilletera.forEach(div => {
-            div.classList.toggle('animarBorde');
-        });
-        regalar.style.backgroundColor = "grey";
-        regalara(jugador.nombre, jugadorSeleccionado);
-    }
 
-    // Agregar el event listener al botón "regalar"
-    regalar.addEventListener('click', () => {
-        estaSeleccionando = !estaSeleccionando;
-
-        // Alternar la clase 'animarBorde' de los divs
-        divsParaBilletera.forEach(div => {
-            div.classList.toggle('animarBorde');
-            if (estaSeleccionando) {
-                // Solo agregar el event listener cuando está seleccionando
-                div.addEventListener('click', handleDivClick);
-            } else {
-                // Eliminar el event listener cuando no está seleccionando
-                div.removeEventListener('click', handleDivClick);
-            }
-        });
-
-        // Cambiar el color del botón "regalar"
-        if (regalar.style.backgroundColor == "red") {
-            regalar.style.backgroundColor = "grey";
-        } else {
-            regalar.style.backgroundColor = "red";
-        }
-
-        // Si no está seleccionando, cambiar la acción para iniciar la selección de inmediato
-        if (estaSeleccionando) {
-            // Agregar event listeners de inmediato si estamos comenzando a seleccionar
-            divsParaBilletera.forEach(div => {
-                div.addEventListener('click', handleDivClick);
-            });
-        }
-    });
-    */
-}
-
-
-
-
-
+})
 
 
 

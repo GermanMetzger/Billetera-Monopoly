@@ -36,9 +36,6 @@ app.get('/', (req, res) => {
     res.render('index');  // Renderiza 'index.ejs' desde la carpeta 'views'
 });
 
-app.get('/billetera', (req, res) => {
-    res.render('billetera'); 
-});
 
 
 
