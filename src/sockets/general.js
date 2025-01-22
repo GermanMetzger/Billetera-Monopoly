@@ -111,6 +111,13 @@ module.exports = (io, socket) => {
 
         io.to(codigoSala).emit('comenzarJuego', salaJugadores);
     });
+
+    socket.on("regalar",(json) => {
+        const regalador = json.regalador;
+        const regalado = json.regalado;
+        const dinero = json.dinero;
+        console.log(regalador+" le va a regalar $"+dinero+" a "+regalado);
+    })
     
 
     socket.on('disconnect', () => {

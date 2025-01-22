@@ -1,6 +1,6 @@
 var socket = io();  // Inicializar la conexión con el servidor
 
-function createRoom(){
+function createRoom() {
     nombre = prompt("Ingrese su nombre de jugador:");
     let jugadores = [];
 
@@ -14,12 +14,12 @@ function createRoom(){
     sessionStorage.setItem('jugadores', JSON.stringify(jugadores)); // Save
     sessionStorage.setItem('host', true);
     sessionStorage.setItem('yo', JSON.stringify(json)); // Save
-    socket.emit('crear',json)
+    socket.emit('crear', json)
 };
 
 
 
-function joinRoom(){
+function joinRoom() {
     const header = document.getElementById("header")
     const codigo = document.getElementById("codigo");
     header.style.display = "none";
@@ -28,7 +28,7 @@ function joinRoom(){
 
 
 
-function unirse(){
+function unirse() {
     const codigo = document.getElementById("codigo");
     const codigoSala = document.getElementById("codigoSala").value;
     const nombre = document.getElementById("nombre").value;
@@ -46,48 +46,48 @@ function unirse(){
     sessionStorage.setItem('jugadores', JSON.stringify(jugadores)); // Save
     sessionStorage.setItem('host', false);
     sessionStorage.setItem('yo', JSON.stringify(json)); // Save
-    socket.emit('unirse',json);
+    socket.emit('unirse', json);
 }
 
-socket.on('comprobarJugadores', (a)=>{
+socket.on('comprobarJugadores', (a) => {
     let jugadores = JSON.parse(sessionStorage.getItem('jugadores'));
     jugadores.forEach(jugador => {
-        if (jugador.host){
+        if (jugador.host) {
             jugadores.push(a);
             sessionStorage.setItem('jugadores', JSON.stringify(jugadores));
-            socket.emit("compartir",jugadores);
+            socket.emit("compartir", jugadores);
         }
     });
 })
 
 //socket que se encarga de mostrar al resto de jugadores cuando un nuevo jugador se une a la sala
-socket.on('actualizarJugadores', (jugadores)=>{
+socket.on('actualizarJugadores', (jugadores) => {
     sessionStorage.setItem('jugadores', JSON.stringify(jugadores));
     const codigoSala = jugadores.codigoSala;
     let host = sessionStorage.getItem('host') === 'true';
     const espera = document.getElementById("espera")
     espera.style.display = "flex";
     espera.innerHTML = "";
-    jugadores.forEach(jugador=>{
-        if(!host){
+    jugadores.forEach(jugador => {
+        if (!host) {
             const jugadorDiv = document.createElement("div");
-            jugadorDiv.setAttribute("id",jugador.nombre);
+            jugadorDiv.setAttribute("id", jugador.nombre);
             jugadorDiv.style.borderColor = jugador.color;
             jugadorDiv.style.color = jugador.color;
             jugadorDiv.classList.add("jugador");
             jugadorDiv.innerText = jugador.nombre;
             espera.appendChild(jugadorDiv);
-        }else{
+        } else {
             const jugadorDiv = document.createElement("div");
-            jugadorDiv.setAttribute("id",jugador.nombre);
+            jugadorDiv.setAttribute("id", jugador.nombre);
             jugadorDiv.style.borderColor = jugador.color;
             jugadorDiv.style.color = jugador.color;
             jugadorDiv.classList.add("jugador");
-            jugadorDiv.innerText = jugador.nombre+"(Expulsar)";
+            jugadorDiv.innerText = jugador.nombre + "(Expulsar)";
             jugadorDiv.style.cursor = "pointer";
 
-            jugadorDiv.onclick = function() {
-                socket.emit('expulsar', jugador.nombre,jugador.id,jugadores[1].codigoSala);
+            jugadorDiv.onclick = function () {
+                socket.emit('expulsar', jugador.nombre, jugador.id, jugadores[1].codigoSala);
             };
 
             espera.appendChild(jugadorDiv);
@@ -95,7 +95,7 @@ socket.on('actualizarJugadores', (jugadores)=>{
     })
 });
 
-socket.on('expulsado', (jugador)=>{
+socket.on('expulsado', (jugador) => {
     console.log("Expulsando al jugador:", jugador);
 
     const jugadorDiv = document.getElementById(jugador);
@@ -105,7 +105,7 @@ socket.on('expulsado', (jugador)=>{
 });
 
 //socket que se encarga de ocultar el menu principal
-socket.on('quitarHeader', (a)=>{
+socket.on('quitarHeader', (a) => {
     const header = document.getElementById("header");
     const espera = document.getElementById("espera");
     const centrarTodo = document.getElementById("centrarTodo");
@@ -115,7 +115,7 @@ socket.on('quitarHeader', (a)=>{
 })
 
 //socket que toma del servidor el codigo de la sala y lo muestra al host
-socket.on('codigoDeSala', (codigo)=>{
+socket.on('codigoDeSala', (codigo) => {
     const header = document.getElementById("header")
     const clave = document.getElementById("clave")
     header.style.display = "none";
@@ -124,7 +124,7 @@ socket.on('codigoDeSala', (codigo)=>{
 })
 
 //socket que busca el link en el servidor y lo muestra en pantalla
-socket.on("cargarLink", (link)=>{
+socket.on("cargarLink", (link) => {
     const linkDiv = document.getElementById("linkDiv")
     const comenzar = document.getElementById("comenzar")
     comenzar.style.display = "flex";
@@ -159,39 +159,39 @@ function copiarLink() {
 }
 
 //listener que hace que no se pueda actualizar la pagina en movil
-document.addEventListener('touchmove', function(event) {
+document.addEventListener('touchmove', function (event) {
     if (window.scrollY === 0 && event.touches[0].clientY > 0) {
         event.preventDefault();  // Evita el desplazamiento hacia abajo
     }
 }, { passive: false });
 
 //socket que oculta el menu
-socket.on('espera', (a)=>{
+socket.on('espera', (a) => {
     const header = document.getElementById("header")
     header.style.display = "none";
 })
 
 //console.log de error
 socket.on('error', (msg) => {
-    console.log("Error:"+msg);
+    console.log("Error:" + msg);
 });
 
 //socket que toma a todos los jugadores y comienza el juego
-function jugar(){
+function jugar() {
     let jugadores = JSON.parse(sessionStorage.getItem('jugadores')); //todos los jugadores
 
 }
 
 //boton de comenzar que se muestra solo al host
-socket.on("comenzar",()=>{
+socket.on("comenzar", () => {
     const comenzar = document.getElementById("comenzar");
     comenzar.style.display = "flex";
 })
 
 //funcion que combierte los JSON en objetos dentro del servidor
-function jugar(){
+function jugar() {
     let jugadores = JSON.parse(sessionStorage.getItem('jugadores'));
-    socket.emit("jugar",jugadores);
+    socket.emit("jugar", jugadores);
 }
 
 //funcion para obtener los valores de colores rgb de hexadecimal
@@ -203,7 +203,7 @@ function hexToRgb(hex) {
     return `${r}, ${g}, ${b}`;
 }
 //Aca se ocultan todas las ventanas y se generan las billeteras
-socket.on("comenzarJuego",(jugadores)=>{
+socket.on("comenzarJuego", (jugadores) => {
     const container = document.getElementById("container");
     const billeteras = document.getElementById("billeteras");
     const acciones = document.getElementById("acciones");
@@ -216,38 +216,63 @@ socket.on("comenzarJuego",(jugadores)=>{
         const divParaBilletera = document.createElement("div");
         const billetera = document.createElement("div");
         const dinero = document.createElement("div");
-    
+        const regalar = document.createElement("div");
+        const yo = JSON.parse(sessionStorage.getItem('yo'));
+
+
         billetera.setAttribute("id", jugador.nombre);
         divParaBilletera.setAttribute("class", "divParaBilletera");
         divParaBilletera.setAttribute("id", "divParaBilletera");
         dinero.setAttribute("id", jugador.nombre + "Dinero");
         dinero.setAttribute("class", "dinero");
-    
+        regalar.setAttribute("class", "accion");
+        if(jugador.nombre == yo.nombre){
+            regalar.style.display = "none";
+        }
+        regalar.addEventListener('click',function(){
+            console.log(yo.nombre +" quiere regalarle a "+jugador.nombre);
+            let numero;
+            const div = document.getElementById(yo.nombre+"Dinero").innerText.slice(1);
+            const dinero = Number(div);
+            do {
+                numero = prompt("Por favor, ingresa cuánto le vas a regalar a " + jugador.nombre + ":");
+            } while (numero !== null && (isNaN(numero) || numero === '' || Number(numero) <= 0 || Number(numero) > dinero));
+            if (numero !== null) {
+                numero = Number(numero);
+                let json = {
+                    regalador: yo.nombre,
+                    regalado: jugador.nombre,
+                    dinero: numero
+                }
+                socket.emit('regalar', json);
+                console.log("Número ingresado:", numero);
+            } else {
+                console.log("Regalo cancelado");
+            }
+            
+        });
+        regalar.innerHTML = "Regalar";
         billetera.style.borderColor = jugador.color;
         billetera.style.backgroundColor = `rgba(${hexToRgb(jugador.color)}, 0.5)`;
         billetera.classList.add("jugador");
         billetera.innerText = jugador.nombre;
         dinero.innerText = "$" + jugador.dinero;
-    
+
         // Agregamos el div a la sección de billeteras
         billeteras.appendChild(divParaBilletera);
         divParaBilletera.appendChild(billetera);
         billetera.appendChild(dinero);
-    
-        divParaBilletera.style.animationDirection = "alternate-reverse"; // Anima el borde del contenedor
-    
-        // Agrega el evento onclick para detener la animación
-        divParaBilletera.onclick = function () {
-            divParaBilletera.style.animation = ""; // Detiene la animación
-            divParaBilletera.style.border = ""; // quitar borde
-            console.log(`${jugador.nombre} ha sido seleccionado.`); // Muestra mensaje en consola
-        };
-    });
-    
+        billetera.appendChild(regalar);
 
-    
+        divParaBilletera.style.animationDirection = "alternate-reverse"; // Anima el borde del contenedor
+
+    });
+
+
+
+
     let host = sessionStorage.getItem('host') === 'true';
-    if(host){
+    if (host) {
         const banco1 = document.getElementById("banco1");
         const banco2 = document.getElementById("banco2");
         banco1.style.display = "flex";
@@ -260,25 +285,77 @@ socket.on("comenzarJuego",(jugadores)=>{
 //funciones dentro del juego!!!!!!!!!
 
 
-const regalar = document.getElementById("regalar");
+function regalar(regalado) {
+    const jugador = JSON.parse(sessionStorage.getItem('yo'));
+    console.log(jugador.nombre +" quiere regalarle a "+regalado);
+    
 
-regalar.addEventListener('click', () => {
-    const divParaBilletera = document.getElementById("divParaBilletera");
-    const jugador = sessionStorage.getItem('yo');
-    // Alternar la clase 'animacion' en el elemento
-    divParaBilletera.classList.toggle('animarBorde');
-    regalar.style.backgroundColor = "red"
-});
+    /*
+    // Función que maneja el click en los divs
+    function handleDivClick(event) {
+        if (!estaSeleccionando) return;  // Si no está seleccionando, no hacer nada
+        
+        const jugadorSeleccionado = event.currentTarget.querySelector('.jugador').id;
+        console.log(`El jugador seleccionado es: ${jugadorSeleccionado}`);
+        
+        // Lógica para cuando se selecciona un div
+        divsParaBilletera.forEach(div => {
+            div.classList.toggle('animarBorde');
+        });
+        regalar.style.backgroundColor = "grey";
+        regalara(jugador.nombre, jugadorSeleccionado);
+    }
 
-function pagar(){
+    // Agregar el event listener al botón "regalar"
+    regalar.addEventListener('click', () => {
+        estaSeleccionando = !estaSeleccionando;
+
+        // Alternar la clase 'animarBorde' de los divs
+        divsParaBilletera.forEach(div => {
+            div.classList.toggle('animarBorde');
+            if (estaSeleccionando) {
+                // Solo agregar el event listener cuando está seleccionando
+                div.addEventListener('click', handleDivClick);
+            } else {
+                // Eliminar el event listener cuando no está seleccionando
+                div.removeEventListener('click', handleDivClick);
+            }
+        });
+
+        // Cambiar el color del botón "regalar"
+        if (regalar.style.backgroundColor == "red") {
+            regalar.style.backgroundColor = "grey";
+        } else {
+            regalar.style.backgroundColor = "red";
+        }
+
+        // Si no está seleccionando, cambiar la acción para iniciar la selección de inmediato
+        if (estaSeleccionando) {
+            // Agregar event listeners de inmediato si estamos comenzando a seleccionar
+            divsParaBilletera.forEach(div => {
+                div.addEventListener('click', handleDivClick);
+            });
+        }
+    });
+    */
+}
+
+
+
+
+
+
+
+
+function pagar() {
 
 }
-function subastar(){
+function subastar() {
 
 }
-function pagarJugador(){
+function pagarJugador() {
 
 }
-function cobrarJugador(){
+function cobrarJugador() {
 
 }
