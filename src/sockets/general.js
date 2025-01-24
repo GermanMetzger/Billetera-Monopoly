@@ -1,6 +1,5 @@
 const os = require('os');
 const Jugador = require('../clases/Jugador'); // Importa la clase
-const db  = require('../database');
 
 
 
@@ -23,13 +22,6 @@ module.exports = (io, socket) => {
 
 
     socket.on('crear', (creador)=>{
-        db.insert({ name: 'Alice', age: 25 }, (err, newDoc) => {
-            if (err) {
-              console.log('Error al insertar:', err);
-            } else {
-              console.log('Nuevo documento insertado:', newDoc);
-            }
-          });
         if (!partidaCreada) {
             partidaCreada = true;
             const ip = "http://"+obtenerIpLocal()+":3000";
@@ -57,13 +49,7 @@ module.exports = (io, socket) => {
     })
 
     socket.on('unirse', (datos)=>{
-        db.find({ name: 'Alice' }, (err, docs) => {
-            if (err) {
-              console.log('Error al consultar:', err);
-            } else {
-              console.log('Documentos encontrados:', docs);
-            }
-          });
+
     const nombre = datos.nombre;
     const codigoSala = datos.codigoSala;
     const color = datos.color;
@@ -108,10 +94,7 @@ module.exports = (io, socket) => {
                 const jugador = new Jugador();
                 //guardarObjeto
                 jugador.cargar(jugadorData.id,jugadorData.nombre,jugadorData.host,jugadorData.color,dineroInicial)
-    
-                //guardar en la base de datos
-                guardarJugador(jugadorData.id, jugadorData.nombre, jugadorData.host, jugadorData.color, dineroInicial);
-                
+                jugador.guardarJugador()
                 // Añadir el jugador a la lista de jugadores de la sala
                 salaJugadoresTmp.push(jugador);
             
@@ -133,18 +116,19 @@ module.exports = (io, socket) => {
             // Obtengo a los jugadores usando promesas
             const emisor = new Jugador();
             const receptor = new Jugador();
-    
-            const jugadorEmisor = await emisor.cargarPorNombre(regalador);
-            const jugadorReceptor = await receptor.cargarPorNombre(regalado);
-    
-            if (!jugadorEmisor || !jugadorReceptor) {
+
+            if (!(await emisor.cargarPorNombre(regalador)) || !(await receptor.cargarPorNombre(regalado))) {
                 console.log('Uno o ambos jugadores no fueron encontrados');
                 return;
-            }
+              }
     
             // Restamos y sumamos dinero
-            emisor.restarDinero(dinero);
-            receptor.sumarDinero(dinero);
+            if(await emisor.restarDinero(dinero)){
+                console.log("Regalo enviado")
+            }
+            if(await receptor.sumarDinero(dinero)){
+                console.log("Regalo enviado")
+            }
     
             // Ahora creamos el objeto datos con los valores actualizados
             const datos = {

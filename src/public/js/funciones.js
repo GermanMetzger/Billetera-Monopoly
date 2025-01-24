@@ -214,7 +214,8 @@ socket.on("comenzarJuego", (jugadores) => {
         const dinero = document.createElement("div");
         const regalar = document.createElement("div");
         const yo = JSON.parse(sessionStorage.getItem('yo'));
-        const codigoSala = document.getElementById("clave").innerText;
+        let jugadores = JSON.parse(sessionStorage.getItem('jugadores'));
+        const codigoSala = jugadores[1].codigoSala;
 
 
         billetera.setAttribute("id", jugador.nombre);
@@ -227,10 +228,10 @@ socket.on("comenzarJuego", (jugadores) => {
             regalar.style.display = "none";
         }
         regalar.addEventListener('click',function(){
-            console.log(yo.nombre +" quiere regalarle a "+jugador.nombre);
             let numero;
             const div = document.getElementById(yo.nombre+"Dinero").innerText.slice(1);
             const dinero = Number(div);
+            console.log(dinero);
             do {
                 numero = prompt("Por favor, ingresa cuánto le vas a regalar a " + jugador.nombre + ":");
             } while (numero !== null && (isNaN(numero) || numero === '' || Number(numero) <= 0 || Number(numero) > dinero));
@@ -242,8 +243,8 @@ socket.on("comenzarJuego", (jugadores) => {
                     dinero: numero,
                     codigoSala: codigoSala
                 }
+                console.log(json);
                 socket.emit('regalar', json);
-                console.log("Número ingresado:", numero);
             } else {
                 console.log("Regalo cancelado");
             }
@@ -286,10 +287,10 @@ socket.on("comenzarJuego", (jugadores) => {
 socket.on("actualizarDinero",(json) => {
     console.log(json);
     const emisorDiv = document.getElementById(json.emisor+"Dinero");
-    emisorDiv.innerHTML = json.emisorDinero;
+    emisorDiv.innerHTML = "$"+json.emisorDinero;
 
     const receptorDiv = document.getElementById(json.receptor+"Dinero");
-    receptorDiv.innerHTML = json.receptorDinero;
+    receptorDiv.innerHTML = "$"+json.receptorDinero;
     
 
 

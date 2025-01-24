@@ -45,7 +45,6 @@
     
 
 
-        <button onclick="ver()">a</button>
 </body>
 
 </html>
@@ -67,12 +66,5 @@
     document.getElementById('codigoSala').value = codigo;
   };
 
-
-    document.addEventListener('keydown', (event) => {
-    if (event.altKey) {
-        socket.emit("verTablas");
-        console.log("emitio verTablas");
-    }
-});
 
 </script>
