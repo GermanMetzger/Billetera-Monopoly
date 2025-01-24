@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+const fs = require('fs');
+
 
 
 
@@ -36,6 +38,23 @@ app.get('/', (req, res) => {
     res.render('index');  // Renderiza 'index.ejs' desde la carpeta 'views'
 });
 
+
+
+const eliminarBaseDeDatos = () => {
+    fs.unlink('mydb.db', (err) => {
+      if (err) {
+        console.error('Error al eliminar el archivo de la base de datos:', err);
+      } else {
+        console.log('Archivo de base de datos eliminado correctamente.');
+      }
+    });
+  };
+
+  process.on('SIGINT', () => {
+    console.log('Servidor cerrado. Eliminando el archivo de base de datos...');
+    eliminarBaseDeDatos();  // Eliminar la base de datos
+    process.exit();  // Terminar el proceso
+  });
 
 
 

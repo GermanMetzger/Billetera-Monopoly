@@ -1,5 +1,7 @@
 const os = require('os');
 const Jugador = require('../clases/Jugador'); // Importa la clase
+const db  = require('../database');
+
 
 
 function obtenerIpLocal() {
@@ -21,6 +23,13 @@ module.exports = (io, socket) => {
 
 
     socket.on('crear', (creador)=>{
+        db.insert({ name: 'Alice', age: 25 }, (err, newDoc) => {
+            if (err) {
+              console.log('Error al insertar:', err);
+            } else {
+              console.log('Nuevo documento insertado:', newDoc);
+            }
+          });
         if (!partidaCreada) {
             partidaCreada = true;
             const ip = "http://"+obtenerIpLocal()+":3000";
@@ -48,6 +57,13 @@ module.exports = (io, socket) => {
     })
 
     socket.on('unirse', (datos)=>{
+        db.find({ name: 'Alice' }, (err, docs) => {
+            if (err) {
+              console.log('Error al consultar:', err);
+            } else {
+              console.log('Documentos encontrados:', docs);
+            }
+          });
     const nombre = datos.nombre;
     const codigoSala = datos.codigoSala;
     const color = datos.color;
