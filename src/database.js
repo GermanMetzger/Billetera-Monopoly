@@ -1,4 +1,4 @@
-const Datastore = require('nedb'); // Importar NeDB
+const Datastore = require('@seald-io/nedb')
 
 // Crear una base de datos en un archivo (si no existe, lo creará)
 const db = new Datastore({ filename: 'mydb.db', autoload: true });
