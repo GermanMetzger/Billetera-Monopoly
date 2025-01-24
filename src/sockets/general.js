@@ -1,6 +1,5 @@
 const os = require('os');
 const Jugador = require('../clases/Jugador'); // Importa la clase
-const { guardarJugador , vaciarTablas, verTodoDeTablas} = require('../db.js');
 
 
 function obtenerIpLocal() {
@@ -157,15 +156,9 @@ module.exports = (io, socket) => {
             if (salas[codigoSala].length === 0) {
                 delete salas[codigoSala];
                 console.log(`La sala ${codigoSala} está vacía y ha sido eliminada.`);
-                vaciarTablas();
+                
             }
         }
-    });
-
-    socket.on('verTablas', () => {
-        console.log('Ver tablas');
-        vaciarTablas();
-        verTodoDeTablas();
     });
 }
 
