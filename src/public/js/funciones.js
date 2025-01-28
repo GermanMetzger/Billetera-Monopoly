@@ -11,6 +11,7 @@ function createRoom() {
         color: "#000000"
     }
 
+
     jugadores.push(json); // Insert
     sessionStorage.setItem('jugadores', JSON.stringify(jugadores)); // Save
     sessionStorage.setItem('host', true);
@@ -279,7 +280,6 @@ socket.on("comenzarJuego", (jugadores) => {
 //funciones dentro del juego!!!!!!!!!
 
 socket.on("actualizarDinero",(json) => {
-    console.log(json);
     const emisorDiv = document.getElementById(json.emisor+"Dinero");
     emisorDiv.innerHTML = "$"+json.emisorDinero;
 
@@ -291,6 +291,7 @@ socket.on("actualizarDinero",(json) => {
 
 function pagarAlBanco() {
     const yo = JSON.parse(sessionStorage.getItem('yo'));
+    const jugadores = JSON.parse(sessionStorage.getItem("jugadores"));
     const codigoSala = jugadores[1].codigoSala;
     let numero;
     const div = document.getElementById(yo.nombre+"Dinero").innerText.slice(1);
@@ -301,16 +302,22 @@ function pagarAlBanco() {
     } while (numero !== null && (isNaN(numero) || numero === '' || Number(numero) <= 0 || Number(numero) > dinero));
     if (numero !== null) {
         numero = Number(numero);
-        let json = {
+        const json = {
             nombre: yo.nombre,
             dinero: numero,
             codigoSala: codigoSala
-        }
+        };
         socket.emit('darAlBanco', json);
     } else {
         console.log("Pago cancelado!");
     }
 }
+
+socket.on("mostrarDineroActual",(json) => {
+    console.log(json)
+    const jugadorDiv = document.getElementById(json.nombre+"Dinero");
+    jugadorDiv.innerHTML = "$"+json.dinero;
+})
 
 function subastar() {
 

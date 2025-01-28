@@ -15,6 +15,7 @@ const server = http.createServer(app);  // Crea el servidor HTTP
 const io = new Server(server);  // Asocia Socket.IO al servidor
 const socketGeneral = require('./sockets/general'); // Archivo para manejar los sockets
 
+
 io.on('connection', async (socket)=>{
     console.log(`Socket ${socket.id} conectado`);
     socketGeneral(io, socket);

@@ -15,6 +15,7 @@ function obtenerIpLocal() {
     return null;
 }
 
+
 let salas = {}; // Objeto para almacenar jugadores por cada sala
 module.exports = (io, socket) => {
 
@@ -100,7 +101,6 @@ module.exports = (io, socket) => {
             
         });
         salas[codigoSala] = salaJugadoresTmp;
-        console.log(salas[codigoSala]);
     
     
         // Emitir la lista de jugadores actualizada para comenzar el juego
@@ -147,8 +147,25 @@ module.exports = (io, socket) => {
     })
 
     socket.on("darAlBanco", async (json)=>{
-        const jugador = json.nombre;
+        const jugador = new Jugador();
         const dinero = Number(json.dinero);
+        console.log(json);
+        try{
+            await jugador.cargarPorNombre(json.nombre);
+            if(await jugador.restarDinero(dinero)){
+                console.log(jugador.nombre+" le a pagado $"+dinero+" al banco.")
+            }
+
+        }catch{
+            console.log("hubo un error del lado de la base de datos");
+        };
+        const jSon ={
+            nombre: json.nombre,
+            dinero: jugador.dinero
+        }
+
+        io.to(json.codigoSala).emit("mostrarDineroActual",jSon)
+
 
     });
     

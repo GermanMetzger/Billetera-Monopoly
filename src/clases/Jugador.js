@@ -51,7 +51,7 @@ class Jugador {
 
 
   async restarDinero(dinero) {
-    this.dinero = this.dinero - dinero;
+    this.dinero -= dinero;
     return new Promise((resolve, reject) => {
       db.update({ id: this.id }, { $set: { dinero: this.dinero } }, {}, (err, numUpdated) => {
         if (err) {
@@ -66,7 +66,7 @@ class Jugador {
   }
 
   async sumarDinero(dinero) {
-    this.dinero = this.dinero + dinero;
+    this.dinero += dinero;
     return new Promise((resolve, reject) => {
       db.update({ id: this.id }, { $set: { dinero: this.dinero } }, {}, (err, numUpdated) => {
         if (err) {
