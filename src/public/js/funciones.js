@@ -248,7 +248,6 @@ socket.on("comenzarJuego", (jugadores) => {
             } else {
                 console.log("Regalo cancelado");
             }
-            
         });
         regalar.innerHTML = "Regalar";
         billetera.style.borderColor = jugador.color;
@@ -266,11 +265,6 @@ socket.on("comenzarJuego", (jugadores) => {
         divParaBilletera.style.animationDirection = "alternate-reverse"; // Anima el borde del contenedor
 
     });
-
-
-
-
-
     let host = sessionStorage.getItem('host') === 'true';
     if (host) {
         const banco1 = document.getElementById("banco1");
@@ -291,16 +285,33 @@ socket.on("actualizarDinero",(json) => {
 
     const receptorDiv = document.getElementById(json.receptor+"Dinero");
     receptorDiv.innerHTML = "$"+json.receptorDinero;
-    
-
-
 })
 
 
 
-function pagar() {
-
+function pagarAlBanco() {
+    const yo = JSON.parse(sessionStorage.getItem('yo'));
+    const codigoSala = jugadores[1].codigoSala;
+    let numero;
+    const div = document.getElementById(yo.nombre+"Dinero").innerText.slice(1);
+    const dinero = Number(div);
+    console.log(dinero);
+    do {
+        numero = prompt("Por favor, ingresa cuánto le vas a pagar al banco :");
+    } while (numero !== null && (isNaN(numero) || numero === '' || Number(numero) <= 0 || Number(numero) > dinero));
+    if (numero !== null) {
+        numero = Number(numero);
+        let json = {
+            nombre: yo.nombre,
+            dinero: numero,
+            codigoSala: codigoSala
+        }
+        socket.emit('darAlBanco', json);
+    } else {
+        console.log("Pago cancelado!");
+    }
 }
+
 function subastar() {
 
 }

@@ -145,6 +145,12 @@ module.exports = (io, socket) => {
         }
 
     })
+
+    socket.on("darAlBanco", async (json)=>{
+        const jugador = json.nombre;
+        const dinero = Number(json.dinero);
+
+    });
     
 
     socket.on('disconnect', () => {
