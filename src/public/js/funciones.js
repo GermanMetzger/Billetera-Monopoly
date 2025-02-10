@@ -160,10 +160,19 @@ function copiarLink() {
     }
 }
 
-//listener que hace que no se pueda actualizar la pagina en movil
+//listener que hace que no se pueda actualizar la página en movil
 document.addEventListener('touchmove', function (event) {
+    const menuFlotante = document.querySelector('.menuFlotante');
+    
+    // Verifica si el evento de desplazamiento ocurre dentro del .menuFlotante
+    if (menuFlotante.contains(event.target)) {
+        // Permite el scroll dentro del .menuFlotante
+        return;
+    }
+
+    // Si no está dentro del .menuFlotante, evita el scroll hacia abajo cuando scrollY es 0
     if (window.scrollY === 0 && event.touches[0].clientY > 0) {
-        event.preventDefault();  // Evita el desplazamiento hacia abajo
+        event.preventDefault();  // Evita el desplazamiento hacia abajo en la página principal
     }
 }, { passive: false });
 
@@ -270,8 +279,10 @@ socket.on("comenzarJuego", (jugadores) => {
     if (host) {
         const banco1 = document.getElementById("banco1");
         const banco2 = document.getElementById("banco2");
+        const bnaco3 = document.getElementById("banco3")
         banco1.style.display = "flex";
         banco2.style.display = "flex";
+        banco3.style.display = "flex";
     }
 
 })
@@ -320,11 +331,31 @@ socket.on("mostrarDineroActual",(json) => {
 })
 
 function subastar() {
-
+    
 }
+
 function pagarJugador() {
+    
 
 }
 function cobrarJugador() {
 
+}
+
+//funcion que muestra en pantalla a todos los jugadores pars elegir y devuelve el nombre del mismo
+function seleccion(){
+    const menuFlotante = document.getElementById("menuFlotante");
+    const jugadores = JSON.parse(sessionStorage.getItem("jugadores"));
+    const yo = JSON.parse(sessionStorage.getItem('yo'));
+    
+    jugadores.forEach(jugador =>{
+        if(!jugador.nombre == yo.nombre){
+            const jugadorFlotante = document.createElement("div");
+            jugadorFlotante.setAttribute("id", jugador.nombre+"Eleccion");
+            jugadorFlotante.setAttribute("class","jugadorFlotante");
+            jugadorFlotante.style.borderColor = jugador.color;
+            jugadorFlotante.style.backgroundColor = `rgba(${hexToRgb(jugador.color)}, 0.5)`;
+            
+        }
+    })
 }
