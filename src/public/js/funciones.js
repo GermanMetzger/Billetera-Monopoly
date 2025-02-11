@@ -335,11 +335,15 @@ function subastar() {
 }
 
 function pagarJugador() {
+    let jugadorSeleccionado = seleccion();
+    console.log(jugadorSeleccionado);
     
-
+    
 }
 function cobrarJugador() {
-
+    let jugadorSeleccionado = seleccion();
+    console.log(jugadorSeleccionado);
+    
 }
 
 //funcion que muestra en pantalla a todos los jugadores pars elegir y devuelve el nombre del mismo
@@ -349,13 +353,21 @@ function seleccion(){
     const yo = JSON.parse(sessionStorage.getItem('yo'));
     
     jugadores.forEach(jugador =>{
-        if(!jugador.nombre == yo.nombre){
+        if(jugador.nombre != yo.nombre){
             const jugadorFlotante = document.createElement("div");
             jugadorFlotante.setAttribute("id", jugador.nombre+"Eleccion");
             jugadorFlotante.setAttribute("class","jugadorFlotante");
             jugadorFlotante.style.borderColor = jugador.color;
             jugadorFlotante.style.backgroundColor = `rgba(${hexToRgb(jugador.color)}, 0.5)`;
+            jugadorFlotante.innerText = jugador.nombre;
+            jugadorFlotante.addEventListener('click',function(){
+                const jugadorName = jugadorFlotante.id
+                return jugadorName;
+            });
+
+            menuFlotante.appendChild(jugadorFlotante);
             
         }
     })
+    menuFlotante.style.display = "flex";
 }
