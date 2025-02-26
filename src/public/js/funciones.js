@@ -160,21 +160,8 @@ function copiarLink() {
     }
 }
 
-//listener que hace que no se pueda actualizar la página en movil
-document.addEventListener('touchmove', function (event) {
-    const menuFlotante = document.querySelector('.menuFlotante');
-    
-    // Verifica si el evento de desplazamiento ocurre dentro del .menuFlotante
-    if (menuFlotante.contains(event.target)) {
-        // Permite el scroll dentro del .menuFlotante
-        return;
-    }
 
-    // Si no está dentro del .menuFlotante, evita el scroll hacia abajo cuando scrollY es 0
-    if (window.scrollY === 0 && event.touches[0].clientY > 0) {
-        event.preventDefault();  // Evita el desplazamiento hacia abajo en la página principal
-    }
-}, { passive: false });
+
 
 //socket que oculta el menu
 socket.on('espera', (a) => {

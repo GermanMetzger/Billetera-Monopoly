@@ -7,6 +7,7 @@ body {
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    overflow-y: hidden;
 }
 
 .header {
@@ -145,15 +146,17 @@ body {
         background-color: lightgoldenrodyellow;
     }
 
-    .billeteras{
-        display: flex;
-        overflow-x: auto; /* Permite el desplazamiento horizontal */
-        flex-wrap: nowrap; /* Asegura que no se envuelvan a una nueva línea */
-        white-space: nowrap; /* Evita que los jugadores salten de línea */
-        width: 100%;
-        justify-content: center;
-        align-items: center;
-    }
+.billeteras {
+    display: flex;
+    overflow-x: auto; /* Permite solo desplazamiento horizontal */
+    overflow-y: hidden; /* Evita cualquier desplazamiento vertical */
+    flex-wrap: nowrap;
+    white-space: nowrap; /* Evita que los jugadores salten de línea */
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    -webkit-overflow-scrolling: touch; /* Scroll suave en dispositivos móviles */
+}
 
     .divParaBilletera{
         display: inline-flex; /* Mantiene la estructura en línea */
@@ -165,6 +168,7 @@ body {
         margin: 15px;
         border-radius: 5px;
         user-select: none;
+        overflow-y: hidden;
     }
 
     .menuFlotante {
@@ -182,10 +186,7 @@ body {
         transform: translate(-50%, -50%);
         z-index: 1;
         background-color: red;
-        overflow-y: auto; /* Habilita scroll vertical */
-        overflow-x: hidden; /* Evita que el contenido se desplace horizontalmente */
         padding: 30px;
-        -webkit-overflow-scrolling: touch; /* Facilita el scroll en dispositivos móviles */
       }
       
       .jugadorFlotante {
