@@ -2,11 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <title>BILLETERA</title>
 </head>
 <body>
+    <audio id="moneda" src="/sounds/moneda.mp3" preload="auto">
+        <source src="/sounds/moneda.mp3" type="audio/mpeg">
+        <source src="/sounds/moneda.ogg" type="audio/ogg">
+    </audio>
+    
+    <audio id="sad" src="/sounds/sad.mp3" preload="auto">
+        <source src="/sounds/sad.mp3" type="audio/mpeg">
+        <source src="/sounds/sad.ogg" type="audio/ogg">
+    </audio>
+    
 
 
     <div class="container" id="container">
@@ -44,15 +53,16 @@
 
         </div>
        <div id="menuFlotante" class="menuFlotante">
-
-      </div>
-
-        
-
+           
+    </div>
     
     
-
-
+    
+    
+    
+    
+    
+    <div id="fondoSalida" class="fondoSalida" onclick="cerrarFondoSalida()">
 </body>
 
 </html>
@@ -73,6 +83,7 @@
     // Colocar el código en el campo del formulario
     document.getElementById('codigoSala').value = codigo;
   };
+
 
 
 </script>

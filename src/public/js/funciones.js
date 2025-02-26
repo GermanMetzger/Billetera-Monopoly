@@ -280,6 +280,17 @@ socket.on("comenzarJuego", (jugadores) => {
 socket.on("actualizarDinero",(json) => {
     const emisorDiv = document.getElementById(json.emisor+"Dinero");
     emisorDiv.innerHTML = "$"+json.emisorDinero;
+    const yo = JSON.parse(sessionStorage.getItem('yo'));
+    const moneda = document.getElementById("moneda");
+    console.log(yo.nombre);
+    console.log(json.receptor);
+    if(yo.nombre == json.receptor){
+        console.log("nombres iguales");
+        moneda.play().catch(error => {
+            console.error('Error al reproducir el sonido:', error);
+        });
+        
+    }
 
     const receptorDiv = document.getElementById(json.receptor+"Dinero");
     receptorDiv.innerHTML = "$"+json.receptorDinero;
@@ -335,6 +346,7 @@ function cobrarJugador() {
 
 //funcion que muestra en pantalla a todos los jugadores pars elegir y devuelve el nombre del mismo
 function seleccion(){
+    document.getElementById("fondoSalida").style.display = 'flex';
     const menuFlotante = document.getElementById("menuFlotante");
     const jugadores = JSON.parse(sessionStorage.getItem("jugadores"));
     const yo = JSON.parse(sessionStorage.getItem('yo'));
@@ -358,3 +370,10 @@ function seleccion(){
     })
     menuFlotante.style.display = "flex";
 }
+
+function cerrarFondoSalida(){
+    document.getElementById('fondoSalida').style.display = 'none';
+    document.getElementById('menuFlotante').innerHTML = '';
+    document.getElementById('menuFlotante').style.display = 'none'
+  }
+
